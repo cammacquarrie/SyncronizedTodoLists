@@ -1,5 +1,7 @@
 package edu.carleton.syncronizedtodolists;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -26,7 +28,9 @@ public class LoginResHandler implements EventHandler{
         //login successful
         if(res){
             String userStr = event.get(Fields.USER).toString();
+            Log.i("USR JSON", userStr);
             User user = gson.fromJson(userStr, User.class);
+            Log.i("USR JSON", user.getDisplayName());
             ma.setUser(user);
             ma.renderUserInfo();
         }

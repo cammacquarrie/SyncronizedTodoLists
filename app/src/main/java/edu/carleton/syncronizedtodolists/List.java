@@ -6,10 +6,16 @@ import java.util.ArrayList;
 public class List implements Serializable{
 	private ArrayList<Item> items;
 	private ArrayList<User> users;
-	private User admin;
+	private String admin;
 	private String name;
 	private int id;
 
+	public List(String name, String admin){
+		this.name = name;
+		this.admin = admin;
+		users = new ArrayList<User>();
+		items = new ArrayList<Item>();
+	}
 	
 	public List(String name, int id) {
 		this.items = items;
@@ -25,10 +31,10 @@ public class List implements Serializable{
 		users = new ArrayList<User>();
 		items = new ArrayList<Item>();
 	}
-	public User getAdmin() {
+	public String getAdmin() {
 		return admin;
 	}
-	public void setAdmin(User admin) {
+	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
 	public ArrayList<Item> getItems() {
