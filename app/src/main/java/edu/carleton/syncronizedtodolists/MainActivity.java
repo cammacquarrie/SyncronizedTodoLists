@@ -56,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+        Boolean message = false;
+        /*if(extras != null) {
+            message = extras.getBoolean("logedIn");
+        }*/
         setContentView(R.layout.activity_main);
         //init UI components
         usernameView = (TextView) findViewById(R.id.usernameView);
@@ -78,12 +83,15 @@ public class MainActivity extends AppCompatActivity {
 
         //register handlers here
         reactor.register(Fields.LOGIN_RES, new LoginResHandler());
+        reactor.register(Fields.REGISTER, new RegisterResHandler());
 
         ///////handlers^^
-
-        LoginRun login = new LoginRun();
-        Thread thread = new Thread(login);
-        thread.start();
+        if (!message) {
+            Log.i("I", "false");
+            LoginRun login = new LoginRun();
+            Thread thread = new Thread(login);
+            thread.start();
+        }
         //set listener for button to create a new List
         //go to a new List page in edit mode
         newListBtn.setOnClickListener(new View.OnClickListener() {
@@ -174,5 +182,8 @@ public class MainActivity extends AppCompatActivity {
         });
         lists.notify();
         items.notify();
+    }
+    public void onActivityResult(){
+        renderUserInfo();
     }
 }

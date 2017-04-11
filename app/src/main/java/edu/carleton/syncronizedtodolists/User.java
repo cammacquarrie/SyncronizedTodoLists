@@ -22,6 +22,9 @@ public class User implements Serializable{
 		this.userName = userName;
 		this.displayName = displayName;
 	}
+	public User(String userName) {
+		this.userName = userName;
+	}
 	public String getUserName() {
 		return userName;
 	}

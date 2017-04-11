@@ -12,6 +12,7 @@ public class Fields {
 	public static final String USERNAME = "USERNAME";
 	public static final String PASSWORD = "PASSWORD";
 	public static final String DISPLAY = "DISPLAY_NAME";
+	public static final String REGISTER = "REGISTER";
 	public static final String LOGIN = "LOGIN";
 	public static final String LOGIN_RES = "LOGIN_RESPONSE";
 	public static final String USER = "USER";

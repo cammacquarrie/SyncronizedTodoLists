@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.Socket;
@@ -29,8 +31,9 @@ public class LoginRun implements Runnable{
 
     public void run(){
         Socket socket;
+        Gson g = new Gson();
         try  {
-            Log.i("AND", "COnnecting....");
+            Log.i("AND", "Connecting....");
             socket = new Socket(Config.IP, Config.PORT);
             JSONEventSource source = new JSONEventSource(socket);
             mainActivity.setSource(source);
@@ -42,27 +45,38 @@ public class LoginRun implements Runnable{
         String username = prefs.getString(Fields.USERNAME, null);
         String password = "";
         String displayname = "";
-        Log.i("username", username);
-
         if(username == null){
             Intent i = new Intent(mainActivity, LoginActivity.class);
-            mainActivity.startActivity(i);
+            mainActivity.startActivityForResult(i, 1234);
         }
         else{
+            Log.i("username", username);
             password = prefs.getString(Fields.PASSWORD, null);
             displayname = prefs.getString(Fields.DISPLAY, null);
             mainActivity.setUser(new User(username, displayname, password));
-
             login(username, displayname, password);
         }
     }
 
-    public void login(String username, String displayname, String password){
+    public static void login(String username, String displayname, String password){
         HashMap<String, Serializable> map = new HashMap<String, Serializable>();
         map.put(Fields.USERNAME, username);
         map.put(Fields.DISPLAY, displayname);
         map.put(Fields.PASSWORD, password);
         Event event = new Event(mainActivity.source, map, Fields.LOGIN);
+        try {
+            mainActivity.source.putEvent(event);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void register(String username, String displayname, String password){
+        HashMap<String, Serializable> map = new HashMap<String, Serializable>();
+        map.put(Fields.USERNAME, username);
+        map.put(Fields.DISPLAY, displayname);
+        map.put(Fields.PASSWORD, password);
+        Event event = new Event(mainActivity.source, map, Fields.REGISTER);
         try {
             mainActivity.source.putEvent(event);
         } catch (IOException e) {
