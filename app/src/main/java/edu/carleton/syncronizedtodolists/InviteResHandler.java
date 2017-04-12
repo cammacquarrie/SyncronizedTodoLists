@@ -43,7 +43,7 @@ public class InviteResHandler extends AppCompatActivity implements EventHandler{
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ma.getApplicationContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(ma);
                 builder.setTitle("New Invite");
                 builder.setMessage("Would you like to join " + sender + "'s list?");
                 // Set up the buttons

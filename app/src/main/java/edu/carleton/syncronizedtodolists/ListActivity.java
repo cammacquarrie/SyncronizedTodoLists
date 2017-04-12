@@ -53,14 +53,6 @@ public class ListActivity extends AppCompatActivity {
         itemsView.setAdapter(itemsAdapter);
         itemsAdapter.notifyDataSetChanged();
 
-        itemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Item i = (Item) itemsView.getItemAtPosition(position);
-                System.out.println(i.toString());
-            }
-        });
-
         Button addItemButton = (Button) findViewById(R.id.add_item_button);
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,9 +162,14 @@ public class ListActivity extends AppCompatActivity {
                 map.put(Fields.ITEM, i);
                 Event event = new Event(ma.source, map);
                 try {
+
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            items.add(i);
+                            itemsAdapter.notifyDataSetChanged();
+                        }
+                    });
                     ma.source.putEvent(event);
-                    items.add(i);
-                    itemsAdapter.notifyDataSetChanged();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
