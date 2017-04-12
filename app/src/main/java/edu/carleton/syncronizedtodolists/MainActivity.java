@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -92,6 +93,14 @@ public class MainActivity extends AppCompatActivity {
             Thread thread = new Thread(login);
             thread.start();
         }
+
+        listsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                List l = (List) itemsView.getItemAtPosition(position);
+
+            }
+        });
         //set listener for button to create a new List
         //go to a new List page in edit mode
         newListBtn.setOnClickListener(new View.OnClickListener() {

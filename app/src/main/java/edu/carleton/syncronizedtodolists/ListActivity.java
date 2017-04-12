@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ import communication.Event;
 import communication.Fields;
 
 public class ListActivity extends AppCompatActivity {
+    private ListView itemsView;
     private List list;
     private static MainActivity ma  = MainActivity.getInstance();
 
@@ -31,6 +33,7 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        itemsView = (ListView) findViewById(R.id.itemListView);
 
         Gson gson = new Gson();
 
@@ -40,15 +43,12 @@ public class ListActivity extends AppCompatActivity {
         list = gson.fromJson(listJson, List.class);
         getSupportActionBar().setTitle(list.getName());
 
-        /*.setOnItemClickListener(new OnItemClickListener() {
+        itemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
-                Object o = prestListView.getItemAtPosition(position);
-                prestationEco str=(prestationEco)o;//As you are using Default String Adapter
-                Toast.makeText(getBaseContext(),str.getTitle(),Toast.LENGTH_SHORT).show();
+                Item i = (Item) itemsView.getItemAtPosition(position);
             }
-        });*/
+        });
 
         Button addItemButton = (Button) findViewById(R.id.add_item_button);
         addItemButton.setOnClickListener(new View.OnClickListener() {
