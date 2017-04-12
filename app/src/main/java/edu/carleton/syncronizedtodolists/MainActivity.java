@@ -126,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void newList(final String name){
         final List list = new List(name, user.getUserName());
-
-
         Runnable newList = new Runnable() {
             @Override
             public void run() {
@@ -180,10 +178,14 @@ public class MainActivity extends AppCompatActivity {
                 items.addAll(user.getItems());
             }
         });
-        lists.notify();
-        items.notify();
+        //lists.notify();
+        //items.notify();
     }
     public void onActivityResult(){
         renderUserInfo();
+    }
+
+    public User getUser(){
+        return user;
     }
 }

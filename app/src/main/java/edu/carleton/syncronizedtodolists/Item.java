@@ -13,6 +13,12 @@ public class Item implements Serializable{
 	ArrayList<User> assigned;
 	private int points;
 
+	public Item(String title, String createdBy, int listID){
+		this.title = title;
+		this.createdBy = createdBy;
+		this.listID = listID;
+	}
+
 	public Item(int id, String title, String description, String createdBy, int listID) {
 		this.id = id;
 		this.title = title;
