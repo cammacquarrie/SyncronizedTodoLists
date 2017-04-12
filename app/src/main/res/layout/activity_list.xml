@@ -26,6 +26,16 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="0dp" />
 
+    <Button
+        android:id="@+id/add_user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Add User"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="0dp" />
+
     <ListView
         android:id="@+id/itemListView"
         android:layout_width="match_parent"

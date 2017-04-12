@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -24,6 +26,7 @@ import communication.Event;
 import communication.Fields;
 
 public class ListActivity extends AppCompatActivity {
+    private ListView itemsView;
     private List list;
     private static MainActivity ma  = MainActivity.getInstance();
 
@@ -31,6 +34,7 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        itemsView = (ListView) findViewById(R.id.itemListView);
 
         Gson gson = new Gson();
 
@@ -40,15 +44,12 @@ public class ListActivity extends AppCompatActivity {
         list = gson.fromJson(listJson, List.class);
         getSupportActionBar().setTitle(list.getName());
 
-        /*.setOnItemClickListener(new OnItemClickListener() {
+        itemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-
-                Object o = prestListView.getItemAtPosition(position);
-                prestationEco str=(prestationEco)o;//As you are using Default String Adapter
-                Toast.makeText(getBaseContext(),str.getTitle(),Toast.LENGTH_SHORT).show();
+                Item i = (Item) itemsView.getItemAtPosition(position);
             }
-        });*/
+        });
 
         Button addItemButton = (Button) findViewById(R.id.add_item_button);
         addItemButton.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +70,39 @@ public class ListActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                                 newItem(input.getText().toString());
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        builder.show();
+                    }
+                });
+            }
+        });
+
+
+        Button addUserButton = (Button) findViewById(R.id.add_user_button);
+        addUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ListActivity.this);
+                        builder.setTitle("Invite: ");
+                        final EditText input = new EditText(MainActivity.getInstance());
+                        input.setInputType(InputType.TYPE_CLASS_TEXT);
+                        builder.setView(input);
+                        // Set up the buttons
+                        builder.setPositiveButton("Invite", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                                newInvite(input.getText().toString());
                             }
                         });
                         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -104,6 +138,34 @@ public class ListActivity extends AppCompatActivity {
                 }
                 intent.putExtra("LIST", itemJson);
                 startActivity(intent);
+            }
+        };
+
+        Thread thread = new Thread(newItem);
+        thread.start();
+
+    }
+
+    public void newInvite(final String name){
+        Runnable newItem = new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String, Serializable> map = new HashMap<>();
+                map.put(Fields.TYPE, Fields.NEW_INVITE);
+                map.put(Fields.LIST_ID, list.getId());
+                map.put(Fields.SENDER, ma.getUser().getUserName());
+                map.put(Fields.RECEIVER, name);
+                Event event = new Event(ma.source, map);
+                try {
+                    ma.source.putEvent(event);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),R.string.invite_sent_toast,Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         };
 
