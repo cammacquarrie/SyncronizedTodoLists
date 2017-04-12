@@ -14,6 +14,16 @@ public class Item implements Serializable{
 	ArrayList<User> assigned;
 	private int points;
 
+    public Item(String title, String createdBy, int listID) {
+        this.id = id;
+        this.title = title;
+        this.createdBy = createdBy;
+        this.listID = listID;
+        completed = false;
+        assigned = new ArrayList<User>();
+        points = 0;
+    }
+
 	public Item(int id, String title, String createdBy, int listID) {
 		this.id = id;
 		this.title = title;

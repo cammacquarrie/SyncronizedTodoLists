@@ -188,4 +188,9 @@ public class MainActivity extends AppCompatActivity {
         renderUserInfo();
     }
 
+    public User getUser(){
+        return user;
+    }
+
+
 }
