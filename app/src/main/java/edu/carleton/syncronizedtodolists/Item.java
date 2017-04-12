@@ -3,36 +3,39 @@ package edu.carleton.syncronizedtodolists;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import edu.carleton.syncronizedtodolists.User;
+
 public class Item implements Serializable{
 	private int id;
 	private String title;
-	private String description;
 	private String createdBy;
 	private boolean completed;
 	private int listID;
 	ArrayList<User> assigned;
 	private int points;
 
-	public Item(String title, String createdBy, int listID){
-		this.title = title;
-		this.createdBy = createdBy;
-		this.listID = listID;
-	}
+    public Item(String title, String createdBy, int listID) {
+        this.id = id;
+        this.title = title;
+        this.createdBy = createdBy;
+        this.listID = listID;
+        completed = false;
+        assigned = new ArrayList<User>();
+        points = 0;
+    }
 
-	public Item(int id, String title, String description, String createdBy, int listID) {
+	public Item(int id, String title, String createdBy, int listID) {
 		this.id = id;
 		this.title = title;
-		this.description = description;
 		this.createdBy = createdBy;
 		this.listID = listID;
 		completed = false;
 		assigned = new ArrayList<User>();
 		points = 0;
 	}
-	public Item(int id, String title, String description, String createdBy, int listID, int p) {
+	public Item(int id, String title, String createdBy, int listID, int p) {
 		this.id = id;
 		this.title = title;
-		this.description = description;
 		this.createdBy = createdBy;
 		this.listID = listID;
 		completed = false;
@@ -61,12 +64,6 @@ public class Item implements Serializable{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -92,10 +89,5 @@ public class Item implements Serializable{
 
 	public void setAssigned(ArrayList<User> assigned) {
 		this.assigned = assigned;
-	}
-
-	@Override
-	public String toString(){
-		return title;
 	}
 }
