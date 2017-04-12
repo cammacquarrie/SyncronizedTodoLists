@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter listsAdapter;
     private ArrayAdapter itemsAdapter;
 
-    private ArrayList<List> lists = new ArrayList<List>();
-    private ArrayList<Item> items = new ArrayList<Item>();;
+    public ArrayList<List> lists = new ArrayList<List>();
+    public ArrayList<Item> items = new ArrayList<Item>();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         //register handlers here
         reactor.register(Fields.LOGIN_RES, new LoginResHandler());
         reactor.register(Fields.REGISTER, new RegisterResHandler());
+        reactor.register(Fields.NEW_LIST, new NewListHandler());
 
         ///////handlers^^
         if (!message) {
