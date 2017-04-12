@@ -1,5 +1,6 @@
 package edu.carleton.syncronizedtodolists;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
     private ListView itemsView;
     private Button newListBtn;
 
-    private ListAdapter listsAdapter;
-    private ListAdapter itemsAdapter;
+    private ArrayAdapter listsAdapter;
+    private ArrayAdapter itemsAdapter;
 
-    private ArrayList<List> lists;
-    private ArrayList<Item> items;
+    private ArrayList<List> lists = new ArrayList<List>();
+    private ArrayList<Item> items = new ArrayList<Item>();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,18 +67,14 @@ public class MainActivity extends AppCompatActivity {
         usernameView = (TextView) findViewById(R.id.usernameView);
         displayView = (TextView) findViewById(R.id.displayView);
         listsView = (ListView) findViewById(R.id.listListView);
-        itemsView = (ListView) findViewById(R.id.listListView);
+        itemsView = (ListView) findViewById(R.id.itemListView);
         newListBtn = (Button) findViewById(R.id.newListBtn);
-
-        lists = new ArrayList<List>();
-        items = new ArrayList<Item>();
-
 
         instance = this;
         reactor = new Reactor();
 
-        listsAdapter = new ArrayAdapter<List>(instance, android.R.layout.simple_list_item_1, lists);
-        itemsAdapter = new ArrayAdapter<Item>(instance, android.R.layout.simple_list_item_1, items);
+        listsAdapter = new ArrayAdapter<List>(listsView.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, lists);
+        itemsAdapter = new ArrayAdapter<Item>(itemsView.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, items);
         listsView.setAdapter(listsAdapter);
         itemsView.setAdapter(itemsAdapter);
 
@@ -152,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(newList);
         thread.start();
         user.getLists().add(list);
+        lists.add(list);
+        listsAdapter.notifyDataSetChanged();
     }
 
 
@@ -178,12 +177,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("LISTS", user.getLists().toString());
                 lists.addAll(user.getLists());
                 items.addAll(user.getItems());
+                listsAdapter = new ArrayAdapter<List>(listsView.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, lists);
+                itemsAdapter = new ArrayAdapter<Item>(itemsView.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, items);
+                listsView.setAdapter(listsAdapter);
+                itemsView.setAdapter(itemsAdapter);
             }
         });
-        lists.notify();
-        items.notify();
     }
     public void onActivityResult(){
         renderUserInfo();
     }
+
 }
