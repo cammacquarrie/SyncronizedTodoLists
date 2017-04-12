@@ -2,11 +2,15 @@ package edu.carleton.syncronizedtodolists;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -31,27 +35,32 @@ public class InviteResHandler extends AppCompatActivity implements EventHandler{
 
     @Override
     public void handleEvent(Event event) {
-        final int listID = (int) event.get(Fields.LIST_ID);
-        final String sender = (String) event.get(Fields.SENDER);
+        final String listStr = (String) event.get(Fields.LIST).toString();
+        final String sender = (String) event.get(Fields.SENDER).toString();
+        final List l = gson.fromJson(listStr, List.class);
         //login successful
-        String userStr = event.get(Fields.USER).toString();
-        runOnUiThread(new Runnable() {
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
             public void run() {
-                new AlertDialog.Builder(ma.getApplicationContext())
-                        .setTitle("New Invite")
-                        .setMessage("Invite to join List from" + sender)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                answerInvite(listID, true);
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                answerInvite(listID, false);
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ma.getApplicationContext());
+                builder.setTitle("New Invite");
+                builder.setMessage("Would you like to join " + sender + "'s list?");
+                // Set up the buttons
+                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        answerInvite(l.getId(), true);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        answerInvite(l.getId(), false);
+                    }
+                });
+                builder.show();
             }
         });
     }

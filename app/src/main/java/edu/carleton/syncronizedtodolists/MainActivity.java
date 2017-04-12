@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Bundle extras = getIntent().getExtras();
         Boolean message = false;
-        /*if(extras != null) {
+        if(extras != null) {
             message = extras.getBoolean("logedIn");
-        }*/
+        }
         setContentView(R.layout.activity_main);
         //init UI components
         usernameView = (TextView) findViewById(R.id.usernameView);
