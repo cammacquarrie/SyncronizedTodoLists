@@ -40,6 +40,7 @@ public class ListActivity extends AppCompatActivity {
         itemsView = (ListView) findViewById(R.id.itemListView);
 
         Gson gson = new Gson();
+        final ListActivity instance = this;
 
         Intent i = getIntent();
         String listJson = i.getStringExtra("LIST");
@@ -53,13 +54,6 @@ public class ListActivity extends AppCompatActivity {
         itemsView.setAdapter(itemsAdapter);
         itemsAdapter.notifyDataSetChanged();
 
-        itemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Item i = (Item) itemsView.getItemAtPosition(position);
-                System.out.println(i.toString());
-            }
-        });
 
         Button addItemButton = (Button) findViewById(R.id.add_item_button);
         addItemButton.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +95,7 @@ public class ListActivity extends AppCompatActivity {
                 final Item i = (Item) itemsView.getItemAtPosition(position);
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        new AlertDialog.Builder(ma.getApplicationContext())
+                        new AlertDialog.Builder(instance)
                                 .setTitle("Claiming " + i.getTitle())
                                 .setMessage("Would you like to claim this item?")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
