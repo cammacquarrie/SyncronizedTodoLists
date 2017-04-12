@@ -28,9 +28,11 @@ public class Fields {
 	public static final String LIST_ID = "LIST_ID";
 	public static final String LIST = "LIST";
 	public static final String ITEM = "ITEM";
+	public static final String ITEM_ID = "ITEM_ID";
 	public static final String NEW_ITEM = "NEW_ITEM";
 	public static final String NEW_INVITE = "NEW_INVITE";
 	public static final String INVITE_RES = "INVITE_RES";
 	public static final String ANSWER = "ANSWER";
+	public static final String CLAIM_ITEM = "CLAIM_ITEM";
 
 }
