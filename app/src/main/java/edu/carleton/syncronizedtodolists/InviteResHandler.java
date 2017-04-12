@@ -77,8 +77,13 @@ public class InviteResHandler extends AppCompatActivity implements EventHandler{
                 Event event = new Event(ma.source, map);
                 try {
                     ma.source.putEvent(event);
-                    ma.lists.add(list);
-                    ma.itemsAdapter.notifyDataSetChanged();
+
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            ma.lists.add(list);
+                            ma.itemsAdapter.notifyDataSetChanged();
+                        }
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
