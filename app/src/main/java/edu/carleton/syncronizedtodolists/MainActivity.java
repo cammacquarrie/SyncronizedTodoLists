@@ -97,12 +97,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 List l = (List) listsView.getItemAtPosition(position);
-                Log.i("I", l.getName());
+                Log.i("Items", l.getItems().toString());
                 Intent i = new Intent(getInstance(), ListActivity.class);
 
                 Gson gson = new Gson();
                 String listJson = gson.toJson(l).toString();
                 i.putExtra("LIST", listJson);
+                System.out.println(listJson);
                 startActivity(i);
             }
         });
