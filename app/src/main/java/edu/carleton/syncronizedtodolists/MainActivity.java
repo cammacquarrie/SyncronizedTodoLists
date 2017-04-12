@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         //register handlers here
         reactor.register(Fields.LOGIN_RES, new LoginResHandler());
         reactor.register(Fields.REGISTER, new RegisterResHandler());
+        reactor.register(Fields.NEW_INVITE, new InviteResHandler());
 
         ///////handlers^^
         if (!message) {
