@@ -94,8 +94,14 @@ public class MainActivity extends AppCompatActivity {
         listsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                List l = (List) itemsView.getItemAtPosition(position);
+                List l = (List) listsView.getItemAtPosition(position);
+                Log.i("I", l.getName());
+                Intent i = new Intent(getInstance(), ListActivity.class);
 
+                Gson gson = new Gson();
+                String listJson = gson.toJson(l).toString();
+                i.putExtra("LIST", listJson);
+                startActivity(i);
             }
         });
         //set listener for button to create a new List

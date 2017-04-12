@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class List implements Serializable{
-	private ArrayList<Item> items;
-	private ArrayList<User> users;
+	private transient ArrayList<Item> items;
+	private transient ArrayList<User> users;
 	private String admin;
 	private String name;
 	private int id;
