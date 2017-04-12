@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView itemsView;
     private Button newListBtn;
 
-    private ArrayAdapter listsAdapter;
-    private ArrayAdapter itemsAdapter;
+    public ArrayAdapter listsAdapter;
+    public ArrayAdapter itemsAdapter;
 
     public ArrayList<List> lists = new ArrayList<List>();
     public ArrayList<Item> items = new ArrayList<Item>();

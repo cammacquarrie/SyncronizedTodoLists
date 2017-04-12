@@ -51,13 +51,13 @@ public class InviteResHandler extends AppCompatActivity implements EventHandler{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        answerInvite(l.getId(), true);
+                        answerInvite(l, true);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        answerInvite(l.getId(), false);
+                        answerInvite(l, false);
                     }
                 });
                 builder.show();
@@ -65,24 +65,25 @@ public class InviteResHandler extends AppCompatActivity implements EventHandler{
         });
     }
 
-    public void answerInvite(final int listID, final Boolean ans){
+    public void answerInvite(final List list, final Boolean ans){
         Runnable newItem = new Runnable() {
             @Override
             public void run() {
                 HashMap<String, Serializable> map = new HashMap<>();
                 map.put(Fields.TYPE, Fields.INVITE_RES);
-                map.put(Fields.LIST_ID, listID);
+                map.put(Fields.LIST_ID, list.getId());
                 map.put(Fields.USERNAME, ma.getUser().getUserName());
                 map.put(Fields.ANSWER, ans);
                 Event event = new Event(ma.source, map);
                 try {
                     ma.source.putEvent(event);
+                    ma.lists.add(list);
+                    ma.itemsAdapter.notifyDataSetChanged();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(getApplicationContext(),R.string.invite_sent_toast,Toast.LENGTH_LONG).show();
                     }
                 });
             }
