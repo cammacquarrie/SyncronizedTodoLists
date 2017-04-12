@@ -90,4 +90,10 @@ public class Item implements Serializable{
 	public void setAssigned(ArrayList<User> assigned) {
 		this.assigned = assigned;
 	}
+
+	@Override
+	public String toString(){
+		return title;
+	}
+
 }

@@ -37,7 +37,7 @@ public class InviteResHandler extends AppCompatActivity implements EventHandler{
         String userStr = event.get(Fields.USER).toString();
         runOnUiThread(new Runnable() {
             public void run() {
-                new AlertDialog.Builder(ma.getApplicationContext())
+                new AlertDialog.Builder(getApplicationContext())
                         .setTitle("New Invite")
                         .setMessage("Invite to join List from" + sender)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {

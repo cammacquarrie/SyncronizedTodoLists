@@ -39,21 +39,25 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         itemsView = (ListView) findViewById(R.id.itemListView);
 
-        itemsAdapter = new ArrayAdapter<Item>(itemsView.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, items);
-        //listsView.setAdapter(listsAdapter);
-
         Gson gson = new Gson();
 
         Intent i = getIntent();
         String listJson = i.getStringExtra("LIST");
         Log.i("LIST", listJson);
         list = gson.fromJson(listJson, List.class);
+        //System.out.println(list.getItems().toString());
         getSupportActionBar().setTitle(list.getName());
+
+        items.addAll(list.getItems());
+        itemsAdapter = new ArrayAdapter<Item>(itemsView.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, items);
+        itemsView.setAdapter(itemsAdapter);
+        itemsAdapter.notifyDataSetChanged();
 
         itemsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 Item i = (Item) itemsView.getItemAtPosition(position);
+                System.out.println(i.toString());
             }
         });
 
