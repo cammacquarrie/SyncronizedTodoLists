@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter itemsAdapter;
 
     public ArrayList<List> lists = new ArrayList<List>();
-    public ArrayList<Item> items = new ArrayList<Item>();;
+    public ArrayList<Item> items = new ArrayList<Item>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

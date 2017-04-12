@@ -11,6 +11,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import communication.Event;
@@ -29,12 +31,16 @@ public class ListActivity extends AppCompatActivity {
     private ListView itemsView;
     private List list;
     private static MainActivity ma  = MainActivity.getInstance();
-
+    public ArrayList<Item> items = new ArrayList<Item>();
+    private ArrayAdapter itemsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         itemsView = (ListView) findViewById(R.id.itemListView);
+
+        itemsAdapter = new ArrayAdapter<Item>(itemsView.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, items);
+        //listsView.setAdapter(listsAdapter);
 
         Gson gson = new Gson();
 
@@ -161,11 +167,11 @@ public class ListActivity extends AppCompatActivity {
                 Event event = new Event(ma.source, map);
                 try {
                     ma.source.putEvent(event);
+                    items.add(i);
+                    itemsAdapter.notifyDataSetChanged();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                intent.putExtra("LIST", itemJson);
-                startActivity(intent);
             }
         };
 
@@ -196,7 +202,6 @@ public class ListActivity extends AppCompatActivity {
                 });
             }
         };
-
         Thread thread = new Thread(newItem);
         thread.start();
 
@@ -217,7 +222,7 @@ public class ListActivity extends AppCompatActivity {
                 }
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(getApplicationContext(),R.string.invite_sent_toast,Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),R.string.claim_item_toast,Toast.LENGTH_LONG).show();
                     }
                 });
             }

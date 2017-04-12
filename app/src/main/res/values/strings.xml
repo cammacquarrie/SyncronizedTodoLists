@@ -19,4 +19,5 @@
     <string name="failed_login_toast">Failed to Login</string>
     <string name="failed_register_toast">Username is already taken</string>
     <string name="invite_sent_toast">Invite Sent</string>
+    <string name="claim_item_toast">Item was claimed</string>
 </resources>
