@@ -63,6 +63,7 @@ public class InviteResHandler extends AppCompatActivity implements EventHandler{
                 HashMap<String, Serializable> map = new HashMap<>();
                 map.put(Fields.TYPE, Fields.INVITE_RES);
                 map.put(Fields.LIST_ID, listID);
+                map.put(Fields.USERNAME, ma.getUser().getUserName());
                 map.put(Fields.ANSWER, ans);
                 Event event = new Event(ma.source, map);
                 try {
