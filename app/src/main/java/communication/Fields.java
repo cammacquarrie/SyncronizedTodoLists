@@ -26,5 +26,7 @@ public class Fields {
 	public static final String RECEIVER = "RECEIVER";
 	public static final String NEW_LIST = "NEW_LIST";
 	public static final String LIST = "LIST";
+	public static final String ITEM = "ITEM";
+	public static final String NEW_ITEM = "NEW_ITEM";
 
 }
