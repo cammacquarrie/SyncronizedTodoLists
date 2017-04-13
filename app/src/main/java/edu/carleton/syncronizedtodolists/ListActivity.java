@@ -151,6 +151,7 @@ public class ListActivity extends AppCompatActivity {
     }
     public void newItem(String item){
         final Item i = new Item(item, ma.getUser().getUserName(), list.getId());
+        list.getItems().add(i);
         Runnable newItem = new Runnable() {
             @Override
             public void run() {
