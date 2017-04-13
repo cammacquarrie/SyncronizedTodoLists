@@ -27,7 +27,9 @@ public class NewItemHandler implements EventHandler {
         Item item = gson.fromJson(itemstr, Item.class);
         String creater = item.getCreatedBy();
         if(creater.equals(ma.getUser())){
-            list.getItems().get(list.getItems().size()-1).setId(item.getId());
+            System.out.println("THIS USER MADE THE ITEM");
+            Item i = list.getItems().get(list.getItems().size()-1);
+            i.setId(item.getId());
         }
         else{
             list.getItems().add(item);

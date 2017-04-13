@@ -41,20 +41,19 @@ public class LoginRun implements Runnable{
             e.printStackTrace();
         }
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mainActivity);
-        String username = prefs.getString(Fields.USERNAME, null);
+        String username = null;
         String password = "";
         String displayname = "";
         if(username == null){
             Intent i = new Intent(mainActivity, LoginActivity.class);
             mainActivity.startActivityForResult(i, 1234);
         }
-        else{
+        else{/*
             Log.i("username", username);
             password = prefs.getString(Fields.PASSWORD, null);
             displayname = prefs.getString(Fields.DISPLAY, null);
             mainActivity.setUser(new User(username, displayname, password));
-            login(username, displayname, password);
+            login(username, displayname, password);*/
         }
     }
 
