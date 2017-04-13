@@ -5,7 +5,7 @@ package edu.carleton.syncronizedtodolists;
  */
 
 public class Config {
-    public static final String IP = "192.168.0.20";
+    public static final String IP = "172.17.194.217";
     public static final int PORT = 7001;
     public static final String MyPREFERENCES = "edu.carleton.syncronizedtodolists" ;
 }

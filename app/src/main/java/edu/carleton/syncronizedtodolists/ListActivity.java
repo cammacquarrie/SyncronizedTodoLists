@@ -99,12 +99,13 @@ public class ListActivity extends AppCompatActivity {
                                 .setMessage("Would you like to claim this item?")
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        claimItem(i.getId());
+                                        claimItem(i);
+                                        dialog.cancel();
                                     }
                                 })
                                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        claimItem(i.getId());
+                                        dialog.cancel();
                                     }
                                 })
                                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -208,13 +209,15 @@ public class ListActivity extends AppCompatActivity {
         thread.start();
 
     }
-    public void claimItem(final int itemID){
+    public void claimItem(final Item item){
+        ma.items.add(item);
+        ma.itemsAdapter.notifyDataSetChanged();
         Runnable newItem = new Runnable() {
             @Override
             public void run() {
                 HashMap<String, Serializable> map = new HashMap<>();
                 map.put(Fields.TYPE, Fields.CLAIM_ITEM);
-                map.put(Fields.ITEM_ID, itemID);
+                map.put(Fields.ITEM_ID, item.getId());
                 map.put(Fields.SENDER, ma.getUser().getUserName());
                 Event event = new Event(ma.source, map);
                 try {
